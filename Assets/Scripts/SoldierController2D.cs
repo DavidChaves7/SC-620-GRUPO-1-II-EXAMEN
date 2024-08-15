@@ -6,6 +6,7 @@ public class SoldierController2D : MonoBehaviour
 {
     private int ANIMATION_SPEED;
     private int ANIMATION_FORCE;
+    private int ANIMATION_FALL;
     private int ANIMATION_RUN;
     private int ANIMATION_WALK;
     private int ANIMATION_SHOOT;
@@ -16,23 +17,46 @@ public class SoldierController2D : MonoBehaviour
     [Header("Movement")]
     [SerializeField]
     float walkSpeed;
+
     [SerializeField]
     float runSpeed;
+
     [SerializeField]
     float jumpForce;
+
+    [SerializeField]
+    float gravityMultiplier;
+
+    [SerializeField]
+    Transform groundCheck;
+
+    [SerializeField]
+    Vector2 groundCheckSize;
+
+    [SerializeField]
+    LayerMask groundMask;
+
+    [SerializeField]
+    bool isFacingLeft;
+
 
     Rigidbody2D _rigidbody;
     Animator _animator;
 
     float _inputX;
     float _velocityY;
+    float _gravityY;
 
     bool _inputRun;
-    bool _isFacingLeft;
+    bool _isGrounded;
+    bool _isJumpPressed;
+    bool _isJumping;
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _animator = GetComponentInChildren<Animator>();
+
+        _gravityY = Physics2D.gravity.y;
 
         ANIMATION_ATTACK = Animator.StringToHash("attack");
         ANIMATION_SPEED = Animator.StringToHash("speed");
@@ -40,15 +64,17 @@ public class SoldierController2D : MonoBehaviour
         ANIMATION_DEAD = Animator.StringToHash("dead");
         ANIMATION_RUN = Animator.StringToHash("run");
         ANIMATION_WALK = Animator.StringToHash("walk");
-
+        ANIMATION_FORCE = Animator.StringToHash("force");
+        ANIMATION_FALL = Animator.StringToHash("fall");
     }
     void Start()
     {
-        
+        HandleGrounded();
     }
 
     void Update()
     {
+        HandleGravity();
         HandleInputMove();
         HandleInputRun();
     }
@@ -56,8 +82,23 @@ public class SoldierController2D : MonoBehaviour
     {
         HandleMove();
         HandleRotate();
+        HandleJump();
     }
-
+    private void HandleGravity()
+    {
+        if (_isGrounded)
+        {
+            if (_velocityY < -1.0F)
+            {
+                _velocityY = -1.0F;
+            }
+            HandleInputJump();
+        }
+    }
+    private void HandleInputJump()
+    {
+        _isJumpPressed = Input.GetButton("Jump");
+    }
     private void HandleInputMove() 
     {
         _inputX = Input.GetAxisRaw("Horizontal");
@@ -65,6 +106,51 @@ public class SoldierController2D : MonoBehaviour
     private void HandleInputRun()
     {
         _inputRun = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+    }
+
+    
+    private void HandleGrounded()
+    {
+        _isGrounded = IsGrounded();
+        if (!_isGrounded)
+        {
+            StartCoroutine(WaitForGroundedCoroutine());
+        }
+    }
+    private void HandleJump()
+    {
+        if (_isJumpPressed)
+        {
+            _isJumpPressed = false;
+            _isGrounded = false;
+            _isJumping = true;
+
+            _velocityY = jumpForce;
+            _animator.SetTrigger(ANIMATION_FORCE);
+            StartCoroutine(WaitForGroundedCoroutine());
+
+        }
+        else if (!_isGrounded)
+        {
+            _velocityY += _gravityY * gravityMultiplier * Time.fixedDeltaTime;
+            if (!_isJumping)
+            {
+                _animator.SetTrigger(ANIMATION_FALL);
+            }
+        }
+        else if (_isGrounded)
+        {
+            if (_velocityY >= 0.0F)
+            {
+                _velocityY = -1.0F;
+            }
+            else
+            {
+                HandleGrounded();
+            }
+
+            _isJumping = false;
+        }
     }
     private void HandleMove()
     {
@@ -90,7 +176,6 @@ public class SoldierController2D : MonoBehaviour
 
         _rigidbody.velocity = velocity;
     }
-
     private void HandleRotate()
     {
         if (_inputX == 0.0F)
@@ -98,11 +183,24 @@ public class SoldierController2D : MonoBehaviour
             return;
         }
         bool facingLeft = _inputX < 0.0F;
-        if (_isFacingLeft != facingLeft)
+        if (isFacingLeft != facingLeft)
         {
-            _isFacingLeft = facingLeft;
+            isFacingLeft = facingLeft;
             transform.Rotate(0.0F, 180.0F, 0.0F);
         }
+    }
+
+
+    private bool IsGrounded()
+    {
+        Collider2D collider2D = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0.0F, groundMask);
+        return collider2D != null;
+    }
+    private IEnumerator WaitForGroundedCoroutine()
+    {
+        yield return new WaitUntil(() => !IsGrounded());
+        yield return new WaitUntil(() => IsGrounded());
+        _isGrounded = true;
     }
 
 }
