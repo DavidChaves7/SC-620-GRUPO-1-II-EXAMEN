@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0f89bb2cb38a9f7428c4190d11fabc98
+guid: b6e8c908db8597747b9f17f2cd7a1adb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -93,190 +93,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Idle_0
+      name: Dead_2
       rect:
         serializedVersion: 2
-        x: 43
+        x: 0
         y: 0
-        width: 47
-        height: 62
+        width: 128
+        height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a8b9bd825e019034688d2857c4918812
-      internalID: -670949035
+      spriteID: 4ecc4419fefaa33408184776930b80fd
+      internalID: 152716938
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_1
+      name: Dead_3
       rect:
         serializedVersion: 2
-        x: 171
+        x: 128
         y: 0
-        width: 47
-        height: 62
+        width: 128
+        height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7f50c8ebb2506864eaea4df8637f75b0
-      internalID: -436734336
+      spriteID: 9fd6aa2809a2ced4aa8d289c9df86dc3
+      internalID: -2144097018
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_2
+      name: Dead_4
       rect:
         serializedVersion: 2
-        x: 299
+        x: 256
         y: 0
-        width: 47
-        height: 62
+        width: 128
+        height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f57c2cfad57968b478df7bee85969173
-      internalID: 465981349
+      spriteID: 0172f462b05866544b2477b0453c0973
+      internalID: 1941084923
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_3
+      name: Dead_5
       rect:
         serializedVersion: 2
-        x: 427
+        x: 384
         y: 0
-        width: 47
-        height: 63
+        width: 128
+        height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cbfc1d9d6d29399419ca72aae3486e0d
-      internalID: 682504089
+      spriteID: 4ae28b90101a01146b6d80ebd73305dc
+      internalID: -362812730
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_4
+      name: Dead_6
       rect:
         serializedVersion: 2
-        x: 555
+        x: 512
         y: 0
-        width: 47
-        height: 63
+        width: 128
+        height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0da6cac03c756a64d9ef5611241a8676
-      internalID: 1563162464
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Idle_5
-      rect:
-        serializedVersion: 2
-        x: 683
-        y: 0
-        width: 47
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 35d42bd3f7f3760418d528134f64ee9e
-      internalID: 1727626721
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Idle_6
-      rect:
-        serializedVersion: 2
-        x: 811
-        y: 0
-        width: 47
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e11ff491c523c584e851a928be3202f0
-      internalID: -1933514745
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Idle_7
-      rect:
-        serializedVersion: 2
-        x: 939
-        y: 0
-        width: 47
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 53a4e29c20b766047be05ffed71f352a
-      internalID: 2032186717
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Idle_8
-      rect:
-        serializedVersion: 2
-        x: 1067
-        y: 0
-        width: 47
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c701c36fd22bdef48ab1fe31ca5b08cb
-      internalID: -1778436819
+      spriteID: 61088810292d36a42b65bbe0bd7558bf
+      internalID: 538162957
       vertices: []
       indices: 
       edges: []
@@ -292,15 +208,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Idle_0: -670949035
-      Idle_1: -436734336
-      Idle_2: 465981349
-      Idle_3: 682504089
-      Idle_4: 1563162464
-      Idle_5: 1727626721
-      Idle_6: -1933514745
-      Idle_7: 2032186717
-      Idle_8: -1778436819
+      Dead_0: 14875496
+      Dead_1: 387647710
+      Dead_2: 152716938
+      Dead_3: -2144097018
+      Dead_4: 1941084923
+      Dead_5: -362812730
+      Dead_6: 538162957
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
