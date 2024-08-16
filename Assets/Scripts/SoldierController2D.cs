@@ -48,7 +48,21 @@ public class SoldierController2D : MonoBehaviour
     Vector2 attackSize;
 
     [SerializeField]
+    Transform shotPoint;
+
+    [SerializeField]
+    GameObject bulletPrefab;
+
+    [SerializeField]
+    float bulletLifeTime;
+
+    [SerializeField]
+    float fireTimeout;
+
+    [SerializeField]
     LayerMask attackMask;
+
+
 
     Rigidbody2D _rigidbody;
     Animator _animator;
@@ -59,7 +73,7 @@ public class SoldierController2D : MonoBehaviour
     int attackRate;
 
 
-
+    float _fireTimer;
 
     float _inputX;
     float _velocityY;
@@ -97,6 +111,7 @@ public class SoldierController2D : MonoBehaviour
         HandleInputMove();
         HandleInputRun();
         HandleInputAttack();
+        HandleInputShoot(); 
     }
     private void FixedUpdate()
     {
@@ -132,12 +147,33 @@ public class SoldierController2D : MonoBehaviour
         }
         if (_attackTime == 0.0F)
         {
-            if (Input.GetButtonUp("Fire1"))
+            if (Input.GetButtonUp("Fire2"))
             {
                 Attack();
             }
         }
     }  
+    private void HandleInputShoot() 
+    {
+        _fireTimer -= Time.deltaTime;
+        if (_fireTimer < 0.0F)
+        {
+            _fireTimer = 0.0F;
+        }
+        if (_fireTimer == 0.0F)
+        {
+            if (Input.GetButtonUp("Fire1"))
+            {
+
+                Shoot();
+
+                if (_fireTimer > 0.0F)
+                {
+                    return;
+                }
+            }
+        }
+    }
     private void HandleGrounded()
     {
         _isGrounded = IsGrounded();
@@ -209,21 +245,35 @@ public class SoldierController2D : MonoBehaviour
     { 
        _animator.SetTrigger (ANIMATION_ATTACK);
     }
-    public void Attack(float damage, bool isPercentage)
-    {
-        Collider2D[] colliders =
-           Physics2D.OverlapBoxAll(attackPoint.position, attackSize, 0F, attackMask);
-        foreach (Collider2D collider in colliders)
+        public void Attack(float damage, bool isPercentage)
         {
-            DamageController controller = collider.GetComponent<DamageController>();
-            if (controller == null)
+            Collider2D[] colliders =
+               Physics2D.OverlapBoxAll(attackPoint.position, attackSize, 0F, attackMask);
+            foreach (Collider2D collider in colliders)
             {
-                continue;
+                DamageController controller = collider.GetComponent<DamageController>();
+                if (controller == null)
+                {
+                    continue;
+                }
+                controller.TakeDamage(damage, isPercentage);
             }
-
-            controller.TakeDamage(damage, isPercentage);
-
         }
+    private void Shoot() 
+    {
+        _animator.SetTrigger(ANIMATION_SHOOT);
+    }
+    public void Shoot(float damage, bool isPercentage)
+    {
+        GameObject bullet = Instantiate(bulletPrefab, shotPoint.position, shotPoint.rotation);
+        BulletController bulletController = bullet.GetComponent<BulletController>();
+
+        if (bulletController != null)
+        {
+            bulletController.SetDamage(damage, isPercentage);
+            bulletController.SetDirection(isFacingLeft ? Vector2.left : Vector2.right);
+        }
+        Destroy(bullet, bulletLifeTime); 
     }
     private void HandleRotate()
     {
@@ -238,8 +288,6 @@ public class SoldierController2D : MonoBehaviour
             transform.Rotate(0.0F, 180.0F, 0.0F);
         }
     }
-
-
     private bool IsGrounded()
     {
         Collider2D collider2D = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0.0F, groundMask);
