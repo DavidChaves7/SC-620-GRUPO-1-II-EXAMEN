@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class SoldierController2D : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class SoldierController2D : MonoBehaviour
     private int ANIMATION_ATTACK;
     private int ANIMATION_DEAD;
  
-
+    //////////////////////
     [Header("Movement")]
     [SerializeField]
     float walkSpeed;
@@ -38,14 +39,32 @@ public class SoldierController2D : MonoBehaviour
 
     [SerializeField]
     bool isFacingLeft;
+    /////////////////////////
+    [Header("Attack")]
+    [SerializeField]
+    Transform attackPoint;
 
+    [SerializeField]
+    Vector2 attackSize;
+
+    [SerializeField]
+    LayerMask attackMask;
 
     Rigidbody2D _rigidbody;
     Animator _animator;
 
+    [SerializeField, Tooltip("Range interval for attacks")]
+    float attackRange;
+    [SerializeField, Tooltip("Amount of attacks per Range")]
+    int attackRate;
+
+
+
+
     float _inputX;
     float _velocityY;
     float _gravityY;
+    float _attackTime;
 
     bool _inputRun;
     bool _isGrounded;
@@ -77,6 +96,7 @@ public class SoldierController2D : MonoBehaviour
         HandleGravity();
         HandleInputMove();
         HandleInputRun();
+        HandleInputAttack();
     }
     private void FixedUpdate()
     {
@@ -92,12 +112,8 @@ public class SoldierController2D : MonoBehaviour
             {
                 _velocityY = -1.0F;
             }
-            HandleInputJump();
+            _isJumpPressed = Input.GetButton("Jump");   
         }
-    }
-    private void HandleInputJump()
-    {
-        _isJumpPressed = Input.GetButton("Jump");
     }
     private void HandleInputMove() 
     {
@@ -107,8 +123,21 @@ public class SoldierController2D : MonoBehaviour
     {
         _inputRun = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
     }
-
-    
+    private void HandleInputAttack ()
+    {
+        _attackTime -= Time.deltaTime;
+        if (_attackTime < 0.0F)
+        {
+            _attackTime = 0.0F;
+        }
+        if (_attackTime == 0.0F)
+        {
+            if (Input.GetButtonUp("Fire1"))
+            {
+                Attack();
+            }
+        }
+    }  
     private void HandleGrounded()
     {
         _isGrounded = IsGrounded();
@@ -175,6 +204,26 @@ public class SoldierController2D : MonoBehaviour
         velocity.y = _velocityY;
 
         _rigidbody.velocity = velocity;
+    }
+    private void Attack() 
+    { 
+       _animator.SetTrigger (ANIMATION_ATTACK);
+    }
+    public void Attack(float damage, bool isPercentage)
+    {
+        Collider2D[] colliders =
+           Physics2D.OverlapBoxAll(attackPoint.position, attackSize, 0F, attackMask);
+        foreach (Collider2D collider in colliders)
+        {
+            DamageController controller = collider.GetComponent<DamageController>();
+            if (controller == null)
+            {
+                continue;
+            }
+
+            controller.TakeDamage(damage, isPercentage);
+
+        }
     }
     private void HandleRotate()
     {
