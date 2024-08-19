@@ -27,6 +27,10 @@ public class EnemyAggroController : MonoBehaviour
     [SerializeField]
     float secondsUntilRetreat;
 
+    [Header("Melee attack")]
+    [SerializeField]
+    float meleeRange;
+
     private Rigidbody2D _rb;
     private Animator _animator;
     private float _restingTime;
@@ -40,6 +44,12 @@ public class EnemyAggroController : MonoBehaviour
 
     private void Update()
     {
+        
+
+    }
+
+    private void FixedUpdate()
+    {
         if (player == null)
         {
             StopChasePlayer();
@@ -51,20 +61,19 @@ public class EnemyAggroController : MonoBehaviour
 
   
 
+        if (distanceToPlayer <= meleeRange)
+            _animator.SetTrigger("attack");
+
+
         if (distanceToPlayer < agroRange)
         {
             ChasePlayer();
             _restingTime = secondsUntilRetreat;
-
-            if (distanceToPlayer <= 0.5f)  // Ajusta este valor según tu preferencia
-            {
-                _animator.SetTrigger("attack");  // Inicia la animación de ataque
-            }
         }
-        else if (distanceToPlayer > (agroRange * 1.3f) || distanceToRestingPoint > maxRangeUntilRetreat)
-        {
+        else if (distanceToRestingPoint > maxRangeUntilRetreat)
             StopChasePlayer();
-        }
+        else if (distanceToPlayer > (agroRange * 1.3f))
+            StopChasePlayer();
     }
 
 
@@ -88,7 +97,7 @@ public class EnemyAggroController : MonoBehaviour
             _rb.velocity = new Vector2(speed, 0.0f);
             pos1.localScale = new Vector2(1.0f, 1.0f);
         }
-        else
+        else if (pos1.position.x > pos2.position.x)
         {
             _rb.velocity = new Vector2(-speed, 0.0f);
             pos1.localScale = new Vector2(-1.0f, 1.0f);
@@ -101,7 +110,7 @@ public class EnemyAggroController : MonoBehaviour
         if (_restingTime <= 0.0f)
         {
             float distanceToRestingPoint = Vector2.Distance(transform.position, restingPoint.position);
-            if (distanceToRestingPoint > 0.01f)
+            if (distanceToRestingPoint > 0.1f)
             {
                 HandleWalkFacingFromTo(_rb.transform, restingPoint);
             }
