@@ -3148,6 +3148,7 @@ GameObject:
   - component: {fileID: 1025156729}
   - component: {fileID: 1025156731}
   - component: {fileID: 1025156730}
+  - component: {fileID: 1025156732}
   m_Layer: 7
   m_Name: Zombie
   m_TagString: Untagged
@@ -3243,6 +3244,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1025156732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025156728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82110336efbb463984d6c028b04863e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackPoint: {fileID: 1724488964}
+  attackRange: 0.5
+  meleeDamage: 33
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &1107540037
 GameObject:
   m_ObjectHideFlags: 0
@@ -3970,10 +3989,6 @@ MonoBehaviour:
   speed: 2
   restingPoint: {fileID: 1451089764}
   secondsUntilRetreat: 2
-  attackPoint: {fileID: 1724488964}
-  attackSize: {x: 1, y: 1}
-  attackCooldown: 1.5
-  meleeDamage: 33
 --- !u!50 &1959406600
 Rigidbody2D:
   serializedVersion: 4

@@ -24,24 +24,9 @@ public class EnemyAggroController : MonoBehaviour
     [SerializeField]
     float secondsUntilRetreat;
 
-    [Header("Attack Mechanic")]
-    [SerializeField]
-    Transform attackPoint;  // Punto desde el cual se realiza el ataque
-
-    [SerializeField]
-    Vector2 attackSize;  // Tamaño del área de ataque
-
-    [SerializeField]
-    float attackCooldown;  // Tiempo entre ataques
-
-    [SerializeField]
-    int meleeDamage = 33;  // Daño del ataque melee
-
-    private float lastAttackTime; // Para manejar el cooldown de ataque
-
-    Rigidbody2D _rb;
-    Animator _animator;
-    float _restingTime;
+    private Rigidbody2D _rb;
+    private Animator _animator;
+    private float _restingTime;
 
     private void Start()
     {
@@ -68,9 +53,9 @@ public class EnemyAggroController : MonoBehaviour
             ChasePlayer();
             _restingTime = secondsUntilRetreat;
 
-            if (distanceToPlayer <= attackSize.x && Time.time >= lastAttackTime + attackCooldown)
+            if (distanceToPlayer <= 0.5f)  // Ajusta este valor según tu preferencia
             {
-                MeleeAttack();  // Intentar realizar el ataque si el jugador está en rango y ha pasado el cooldown
+                _animator.SetTrigger("attack");  // Inicia la animación de ataque
             }
         }
         else if (distanceToPlayer > (agroRange * 1.3f) || distanceToRestingPoint > maxRangeUntilRetreat)
@@ -125,35 +110,5 @@ public class EnemyAggroController : MonoBehaviour
         {
             _restingTime -= Time.deltaTime;
         }
-    }
-
-    private void MeleeAttack()
-    {
-        _animator.SetTrigger("attack");
-
-        Collider2D[] hitPlayers = Physics2D.OverlapBoxAll(attackPoint.position, attackSize, 0f);
-
-        foreach (Collider2D hitPlayer in hitPlayers)
-        {
-            DamageController damageController = hitPlayer.GetComponent<DamageController>();
-            if (damageController != null)
-            {
-                // Aplicar daño al jugador
-                damageController.TakeDamage(meleeDamage);
-                Debug.Log("El zombie golpeó al jugador.");
-            }
-        }
-
-        // Actualiza el tiempo del último ataque
-        lastAttackTime = Time.time;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (attackPoint == null)
-            return;
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(attackPoint.position, attackSize);
     }
 }
