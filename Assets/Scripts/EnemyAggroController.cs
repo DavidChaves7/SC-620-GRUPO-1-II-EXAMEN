@@ -69,11 +69,16 @@ public class EnemyAggroController : MonoBehaviour
 
         if (distanceToPlayer < agroRange)
         {
-            ChasePlayer();
-            _restingTime = secondsUntilRetreat;
+            if(distanceToRestingPoint > maxRangeUntilRetreat)
+                    StopChasePlayer();
+            else
+            {
+                ChasePlayer();
+                _restingTime = secondsUntilRetreat;
+            }
+            
         }
-        else if (distanceToRestingPoint > maxRangeUntilRetreat)
-            StopChasePlayer();
+        
         else if (distanceToPlayer > (agroRange * 1.3f))
             StopChasePlayer();
     }
