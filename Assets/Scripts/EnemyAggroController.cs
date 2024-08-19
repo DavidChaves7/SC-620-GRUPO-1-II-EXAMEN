@@ -56,12 +56,10 @@ public class EnemyAggroController : MonoBehaviour
             return;
         }
 
-
-        HandleWalkingAnimation();
-
-
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
         float distanceToRestingPoint = Vector2.Distance(transform.position, restingPoint.position);
+
+  
 
         if (distanceToPlayer <= meleeRange)
             _animator.SetTrigger("attack");
@@ -86,6 +84,13 @@ public class EnemyAggroController : MonoBehaviour
 
     private void HandleWalkFacingFromTo(Transform pos1, Transform pos2)
     {
+    
+        float animatorSpeed = _animator.GetFloat("speed");
+
+        if (speed != animatorSpeed)
+        {
+            _animator.SetFloat("speed", speed); //Inicia animacion de caminar
+        }
 
         if (pos1.position.x < pos2.position.x)
         {
@@ -105,20 +110,14 @@ public class EnemyAggroController : MonoBehaviour
         if (_restingTime <= 0.0f)
         {
             float distanceToRestingPoint = Vector2.Distance(transform.position, restingPoint.position);
-            if (distanceToRestingPoint > 0.2f)
+            if (distanceToRestingPoint > 0.1f)
             {
                 HandleWalkFacingFromTo(_rb.transform, restingPoint);
             }
         }
         else
+        {
             _restingTime -= Time.deltaTime;
-    }
-
-    private void HandleWalkingAnimation()
-    {
-        if (_rb.velocity.magnitude > 0.1f)
-            _animator.SetBool("isWalking",true);
-        else
-            _animator.SetBool("isWalking", false);
+        }
     }
 }

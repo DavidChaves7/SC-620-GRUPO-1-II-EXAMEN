@@ -115,15 +115,12 @@ public class SoldierController2D : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        HandleJump();
-        HandleRotate();
         HandleMove();
-        
-        
+        HandleRotate();
+        HandleJump();
     }
     private void HandleGravity()
     {
-        print("velocity: " + _velocityY + "   //// IsGrounded: " + _isGrounded + "//// isJumping: " + _isJumping);
         if (_isGrounded)
         {
             if (_velocityY < -1.0F)
