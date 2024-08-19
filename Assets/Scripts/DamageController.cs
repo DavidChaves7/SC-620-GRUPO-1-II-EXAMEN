@@ -27,4 +27,11 @@ public class DamageController : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public int getHealth()
+    {
+        if (maxHealth > 0)
+            return (int) maxHealth;
+        else return 0;
+    }
 }
