@@ -20,22 +20,17 @@ public class ZombieMeleeListener : MonoBehaviour
     public void MeleeAttack()
     {
         
-        Collider2D[] objectsOverlapped = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerLayer);
+        Collider2D[] hitPlayers = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerLayer);
 
         
-        foreach (Collider2D collider in objectsOverlapped)
+        foreach (Collider2D player in hitPlayers)
         {
-            if (collider.CompareTag("Player"))
+            DamageController damageController = player.GetComponent<DamageController>();
+            if (damageController != null)
             {
-                DamageController damageController = collider.GetComponent<DamageController>();
-                if (damageController != null)
-                {
-                    damageController.TakeDamage(meleeDamage);
-                    Debug.Log("El zombie golpeó al jugador.");
-                }
+                damageController.TakeDamage(meleeDamage);
+                Debug.Log("El zombie golpeó al jugador.");
             }
-
-           
         }
     }
 
