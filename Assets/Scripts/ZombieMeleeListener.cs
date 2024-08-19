@@ -31,7 +31,7 @@ public class ZombieMeleeListener : MonoBehaviour
                 if (damageController != null)
                 {
                     damageController.TakeDamage(meleeDamage);
-                    Debug.Log("El zombie golpeó al jugador.");
+                    //Debug.Log("El zombie golpeó al jugador.");
                 }
             }
 
