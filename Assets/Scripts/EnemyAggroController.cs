@@ -2,9 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class EnemyAggroController : MonoBehaviour
 {
+    
+
     [Header("Aggro Mechanic")]
     [SerializeField]
     Transform player;
@@ -46,7 +49,7 @@ public class EnemyAggroController : MonoBehaviour
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
         float distanceToRestingPoint = Vector2.Distance(transform.position, restingPoint.position);
 
-        HandleWalkingAnimation();
+  
 
         if (distanceToPlayer < agroRange)
         {
@@ -64,17 +67,6 @@ public class EnemyAggroController : MonoBehaviour
         }
     }
 
-    private void HandleWalkingAnimation()
-    {
-        if (_rb.velocity.magnitude > 0.1f)
-        {
-            _animator.SetBool("isWalking", true);
-        }
-        else
-        {
-            _animator.SetBool("isWalking", false);
-        }
-    }
 
     private void ChasePlayer()
     {
@@ -83,6 +75,14 @@ public class EnemyAggroController : MonoBehaviour
 
     private void HandleWalkFacingFromTo(Transform pos1, Transform pos2)
     {
+    
+        float animatorSpeed = _animator.GetFloat("speed");
+
+        if (speed != animatorSpeed)
+        {
+            _animator.SetFloat("speed", speed); //Inicia animacion de caminar
+        }
+
         if (pos1.position.x < pos2.position.x)
         {
             _rb.velocity = new Vector2(speed, 0.0f);
