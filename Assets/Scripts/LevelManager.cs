@@ -39,6 +39,11 @@ public class LevelManager : MonoBehaviour
         LoadLevel(level);
     }
 
+    public void YouWin()
+    {
+
+    }
+
     public void LastLevel()
     {
         int level = SceneManager.sceneCountInBuildSettings - 1;

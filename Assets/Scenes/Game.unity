@@ -18457,7 +18457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e1733b66a47eed4181160d0583677f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerText: {fileID: 0}
+  timerText: {fileID: 223356155}
   remainingTime: 100
 --- !u!1 &776989465
 GameObject:
@@ -23385,6 +23385,8 @@ GameObject:
   - component: {fileID: 2073587661}
   - component: {fileID: 2073587663}
   - component: {fileID: 2073587662}
+  - component: {fileID: 2073587664}
+  - component: {fileID: 2073587665}
   m_Layer: 0
   m_Name: Money
   m_TagString: Untagged
@@ -23480,6 +23482,44 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &2073587664
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073587660}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.016293466, y: -0.039368555}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.21188828, y: 0.24789414}
+  m_EdgeRadius: 0
+--- !u!114 &2073587665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073587660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eecbb77d98954749ad754929e57d20b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2098032276
 GameObject:
   m_ObjectHideFlags: 0
